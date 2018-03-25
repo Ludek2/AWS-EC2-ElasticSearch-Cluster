@@ -9,7 +9,7 @@ resource "aws_security_group" "bastion" {
   }
 }
 
-resource "aws_security_group_rule" "allow_egress_node" {
+resource "aws_security_group_rule" "allow_egress_bastion" {
   type              = "egress"
   from_port         = 0
   to_port           = 0

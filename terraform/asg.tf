@@ -40,7 +40,7 @@ resource "aws_autoscaling_group" "data-node" {
   force_delete              = true
   launch_configuration      = "${aws_launch_configuration.data-node.name }"
 
-  vpc_zone_identifier       = ["${aws_subnet.node_subnet[0].id}","${aws_subnet.node_subnet[1].id}","${aws_subnet.node_subnet[2].id}"]
+  vpc_zone_identifier       = ["${join(",", aws_subnet.node_subnet.*.id)}"]
   enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupTotalInstances"]
   metrics_granularity       = "1Minute"
 
@@ -104,7 +104,7 @@ resource "aws_autoscaling_group" "master-node" {
   force_delete              = true
   launch_configuration      = "${aws_launch_configuration.data-node.name }"
 
-  vpc_zone_identifier       = ["${aws_subnet.node_subnet[0].id}","${aws_subnet.node_subnet[1].id}","${aws_subnet.node_subnet[2].id}"]
+  vpc_zone_identifier       = ["${join(",", aws_subnet.node_subnet.*.id)}"]
   enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupTotalInstances"]
   metrics_granularity       = "1Minute"
 
