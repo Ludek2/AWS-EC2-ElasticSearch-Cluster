@@ -1,2 +1,4 @@
 .idea/*
 terraform/config.tf
+terraform/terraform*
+terraform/.terraform*

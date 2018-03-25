@@ -1,9 +1,5 @@
 variable "key_name" {
-  default = "your_key_name"
-}
-
-variable "vpc_id" {
-  default = "your_vpc_name"
+  default = "elastic"
 }
 
 variable "cluster_name" {

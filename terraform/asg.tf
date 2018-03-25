@@ -1,8 +1,9 @@
 resource "aws_launch_configuration" "data-node" {
   name_prefix = "data-node-launchconfig"
 
-  ebs_optimized        = "true"
-  image_id             = "ami-08074571"
+  #change to true for the instances that support ebc optimisation
+  ebs_optimized        = "false"
+  image_id             = "ami-8fd760f6"
   instance_type        = "t2.micro"
   key_name             = "${var.key_name}"
 
@@ -50,6 +51,12 @@ resource "aws_autoscaling_group" "data-node" {
   }
 
   tag {
+    key                 = "Name"
+    value               = "data-node"
+    propagate_at_launch = true
+  }
+
+  tag {
     key                 = "ElasticSearchClusterName"
     value               = "${var.cluster_name}"
     propagate_at_launch = true
@@ -65,8 +72,9 @@ resource "aws_autoscaling_group" "data-node" {
 resource "aws_launch_configuration" "master-node" {
   name_prefix = "master-node-launchconfig"
 
-  ebs_optimized        = "true"
-  image_id             = "ami-08074571"
+  #change to true for the instances that support ebc optimisation
+  ebs_optimized        = "false"
+  image_id             = "ami-8fd760f6"
   instance_type        = "t2.micro"
   key_name             = "${var.key_name}"
 
@@ -111,6 +119,12 @@ resource "aws_autoscaling_group" "master-node" {
   lifecycle {
     create_before_destroy = true
     ignore_changes        = ["desired_capacity"]
+  }
+
+  tag {
+    key                 = "Name"
+    value               = "master-node"
+    propagate_at_launch = true
   }
 
   tag {

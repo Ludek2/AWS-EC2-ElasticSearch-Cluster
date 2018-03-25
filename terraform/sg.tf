@@ -1,8 +1,8 @@
 #bastion host security group
 resource "aws_security_group" "bastion" {
-  description = ""
+  description = "bastion host sg"
   name        = "bastion"
-  vpc_id      = "${var.vpc_id}"
+  vpc_id      = "${aws_vpc.vpc.id}"
 
   tags {
     Name = "bastion-sg"
@@ -29,9 +29,9 @@ resource "aws_security_group_rule" "allow_ssh" {
 
 #ElaseticSearch node security group
 resource "aws_security_group" "node" {
-  description = ""
+  description = "ElasticSearch node sg"
   name        = "node"
-  vpc_id      = "${var.vpc_id}"
+  vpc_id      = "${aws_vpc.vpc.id}"
 
   tags {
     Name = "node-sg"
@@ -52,6 +52,6 @@ resource "aws_security_group_rule" "allow_ssh_from_bastion" {
   from_port                = 22
   to_port                  = 22
   protocol                 = "tcp"
-  source_security_group_id = "${aws_security_group.node.id}"
-  security_group_id        = "${aws_security_group.bastion.id}"
+  source_security_group_id = "${aws_security_group.bastion.id}"
+  security_group_id        = "${aws_security_group.node.id}"
 }
